@@ -18,7 +18,7 @@
 
 ## 🎯 Objetivo del proyecto
 
-MyPasswordGenerator nace con el objetivo de ayudar a mejorar la seguridad digital de las personas, ofreciendo una solución rápida, fiable y de código abierto para la generación de contraseñas seguras. Está especialmente pensada para:
+MyPasswordGenerator nace con el objetivo de ayudar a **mejorar la seguridad digital de las personas**, ofreciendo una solución rápida, fiable y de código abierto para la generación de contraseñas seguras. Está especialmente pensada para:
 
 - Usuarios interesados en la seguridad de sus cuentas.
 
@@ -26,4 +26,4 @@ MyPasswordGenerator nace con el objetivo de ayudar a mejorar la seguridad digita
 
 - Entornos donde se valora la eficiencia en la línea de comandos.
 
-Este proyecto es de código abierto y se encuentra en desarrollo. ¡Las contribuciones, sugerencias y mejoras son bienvenidas!
+*Este proyecto es de código abierto y se encuentra en desarrollo. ¡Las contribuciones, sugerencias y mejoras son bienvenidas!*

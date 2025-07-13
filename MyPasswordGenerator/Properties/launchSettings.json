@@ -2,7 +2,7 @@
   "profiles": {
     "MyPasswordGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "-numChar:8 -numPassword:10"
+      "commandLineArgs": "--numPassword 12 --numChar 4"
     }
   }
 }

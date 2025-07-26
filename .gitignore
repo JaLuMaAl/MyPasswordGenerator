@@ -42,6 +42,8 @@ ScaffoldingReadMe.txt
 *.nupkg
 # NuGet Symbol Packages
 *.snupkg
+# NuGet local cache and config
+.nuget/
 
 # Others
 ~$*

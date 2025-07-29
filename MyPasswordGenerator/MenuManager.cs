@@ -38,7 +38,7 @@ namespace MyPasswordGenerator
         }
 
         // Opción que muestra como resultado de la llamada al programa un menú que incluye comentarios para el usuario
-        public void UserFriendlyMenu()
+        public void GuidedMenu()
         {
             Console.WriteLine("--- PASSWORD GENERATOR ---");
             Console.WriteLine("Welcome to MyPasswordGenerator by Marcos Alonso!");

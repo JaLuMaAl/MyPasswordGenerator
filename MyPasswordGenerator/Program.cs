@@ -1,4 +1,7 @@
-﻿namespace MyPasswordGenerator
+﻿using System.CommandLine;
+using System.CommandLine.Parsing;
+
+namespace MyPasswordGenerator
 {
     internal class Program
     {
@@ -7,109 +10,37 @@
             Generator Generator = new Generator();
             MenuManager Menu = new MenuManager(Generator);
 
-            // Guarda el número máximo de argumentos que se pueden recibir
-            const int maxArgs = 4;
+            // Instancio el root command (comando raíz)
+            RootCommand rootCommand = new("Random Secure Password Generator CLI tool");
 
-            bool friendlyUI = false;
+            // Creo quietCommand (quiet) y lo añado como subcomando de rootCommand 
+            Command quietCommand = new("quiet", "The program output will be only the generated passwords");
+            rootCommand.Subcommands.Add(quietCommand);
+            // Creo guidedCommand (guided) y lo añado como subcomando a rootCommand
+            Command guidedCommand = new("guided", "User friendly mode, guide the user throughout the process");
+            rootCommand.Subcommands.Add(guidedCommand);
 
-            // Compruebo que se han recibido argumentos
-            if (args.Length > 0)
+            /* Al estar quietCommand y guidedCommand en el mismo nivel de jerarquía (ambos son "hijos" directos de rootCommand)
+            estos comandos son mutuamente excluyentes, no pueden ser introducidos en la misma llamada */
+
+            // Creación de Option --numChar que permite personalizar el número de caracteres de la contraseña generada
+            Option<int> numCharOption = new("--numChar", "-c")
             {
-                // Compruebo primero la opción de -UIon como primer argumento. Si es correcto friendlyUI cambia de valor a true
-                if ((args.Length == 1) && (args[0] == "-UIon"))
-                {
-                    friendlyUI = true;
-                }
-                // Si el primer arg es -UIon pero aún así se han introducido más args devuelvo mensaje de error
-                else if (args[0] == "-UIon")
-                {
-                    Console.WriteLine("Invalid arguments. When -UIon selected no other argument can be recieve.");
-                    return;
-                }
+                Description = "Number of characters of the generated password",
+                // Longitud predeterminada de las contraseñas = 8 caracteres
+                DefaultValueFactory = parseResult => 8
+            };
+            quietCommand.Options.Add(numCharOption);
 
-                // friendlyUI = true -> muestro el menú correspondiente
-                // friendlyUI = false -> compruebo los argumentos como parámetros del programa para mostrar el menú sin comentarios
-                if (friendlyUI)
-                {
-                    Menu.UserFriendlyMenu();
-                }
-                else
-                {
-                    if (args.Length <= maxArgs)
-                    {
-                        int numChar = 0;
-                        int numPassword = 0;
-                        bool invalidValue = false;
-
-                        // Itero sobre los argumentos
-                        for (int i = 0; i < maxArgs; i++)
-                        {
-                            // Compruebo si se recibe un parámetro y si el valor de este es válido
-                            switch (args[i])
-                            {
-                                // Parámetro --numChar del programa
-                                case "--numChar":
-                                    if (i + 1 < maxArgs)
-                                    {
-                                        bool parseNumChar = int.TryParse(args[i + 1], out int numCharValue);
-                                        if (parseNumChar)
-                                        {
-                                            numChar = numCharValue;
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("--numChar invalid value");
-                                            invalidValue = true;
-                                        }
-                                    }
-                                    i++;
-                                    break;
-
-                                // Parámetro --numPassword del programa
-                                case "--numPassword":
-                                    if (i + 1 < maxArgs)
-                                    {
-                                        bool parseNumPassword = int.TryParse(args[i + 1], out int numPasswordValue);
-                                        if (parseNumPassword)
-                                        {
-                                            numPassword = numPasswordValue;
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("--numPassword invalid value");
-                                            invalidValue = true;
-                                        }
-                                    }
-                                    i++;
-                                    break;
-
-                                default:
-                                    invalidValue = true;
-                                    break;
-                            }
-                        }
-
-                        if (!invalidValue && (numChar > 0) && (numPassword > 0))
-                        {
-                            Menu.QuietMenu(numChar, numPassword);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error: Invalid argument or invalid value");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error: too many arguments");
-                    }
-                }
-            }
-            else
+            // Creación de Option --numPasswords que permite personalizar la cantidad de contraseñas que genera el programa
+            Option<int> numPasswordsOption = new("--numPasswords", "-p")
             {
-                Console.WriteLine("Error: Arguments must be received");
-            }            
+                Description = "Number of passwords the program will generate",
+                // Número predeterminado de contraseñas generadas = 1
+                DefaultValueFactory = parseResult => 1
+            };
+            quietCommand.Options.Add(numPasswordsOption);
 
-            Console.ReadLine();
         }
     }
 }

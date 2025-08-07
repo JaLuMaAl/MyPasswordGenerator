@@ -30,7 +30,7 @@ namespace MyPasswordGenerator
 
             for (int i = 0; i < NumPasswords; i++)
             {
-                newPassword = PasswordGenerator.GenerateNewPassword(NumChar);
+                newPassword = PasswordGenerator.NewPassword(NumChar);
                 Console.WriteLine(newPassword);
             }
 
@@ -72,7 +72,7 @@ namespace MyPasswordGenerator
 
                     for (int i = 0; i < NumPasswords; i++)
                     {
-                        newPassword = PasswordGenerator.GenerateNewPassword(NumChar);
+                        newPassword = PasswordGenerator.NewPassword(NumChar);
                         Console.WriteLine(newPassword);
                     }
 

@@ -11,11 +11,15 @@ namespace MyPasswordGenerator
         private Generator PasswordGenerator;
         private int NumChar;
         private int NumPasswords;
+        private int MaxChar;
+        private int MaxPasswords;
 
         // CONSTRUCTORES
-        public MenuManager(Generator passwordGen)
+        public MenuManager(Generator passwordGen, int maxChar, int maxPasswords)
         {
             PasswordGenerator = passwordGen;
+            MaxChar = maxChar;
+            MaxPasswords = maxPasswords;
         }
 
         // MÉTODOS
@@ -30,7 +34,7 @@ namespace MyPasswordGenerator
 
             for (int i = 0; i < NumPasswords; i++)
             {
-                newPassword = PasswordGenerator.NewPassword(NumChar);
+                newPassword = PasswordGenerator.GeneratePassword(NumChar);
                 Console.WriteLine(newPassword);
             }
 
@@ -50,8 +54,8 @@ namespace MyPasswordGenerator
             // Realizo la conversión de la entrada obtenida a un int con TryParse y guardo el resultado en validNumChar
             bool validNumChar = int.TryParse(Console.ReadLine(), out int parseNumChar);
 
-            // Compruebo que el número de caracteres introducido es válido: mayor que 0 y menor o igual a 128 (número máximo establecido)
-            if (validNumChar && (parseNumChar > 0) && (parseNumChar <= 128))
+            // Compruebo que el número de caracteres introducido es válido: mayor que 0 y menor o igual al número máximo establecido
+            if (validNumChar && (parseNumChar > 0) && (parseNumChar <= MaxChar))
             {
                 NumChar = parseNumChar;
 
@@ -63,7 +67,7 @@ namespace MyPasswordGenerator
                 bool validNumPasswords = int.TryParse(Console.ReadLine(), out int parseNumPasswords);
 
                 // Compruebo que el número de contraseñas a generar (parseNumPasswords) obtenido es válido
-                if (validNumPasswords && (parseNumPasswords > 0) && (parseNumPasswords <= 128))
+                if (validNumPasswords && (parseNumPasswords > 0) && (parseNumPasswords <= MaxPasswords))
                 {
                     NumPasswords = parseNumPasswords;
                     string newPassword = "";
@@ -72,7 +76,7 @@ namespace MyPasswordGenerator
 
                     for (int i = 0; i < NumPasswords; i++)
                     {
-                        newPassword = PasswordGenerator.NewPassword(NumChar);
+                        newPassword = PasswordGenerator.GeneratePassword(NumChar);
                         Console.WriteLine(newPassword);
                     }
 

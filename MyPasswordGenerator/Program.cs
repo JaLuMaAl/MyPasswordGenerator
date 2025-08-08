@@ -7,8 +7,11 @@ namespace MyPasswordGenerator
     {
         static int Main(string[] args)
         {
+            int maxChar = 64; // Caracteres máximos de la contraseña generada
+            int maxPasswords = 400; // Máximas contraseñas que se pueden generar
+
             Generator Generator = new Generator();
-            MenuManager Menu = new MenuManager(Generator);
+            MenuManager Menu = new MenuManager(Generator, maxChar, maxPasswords);
 
             // Instancio el root command (comando raíz)
             RootCommand rootCommand = new("Random Secure Password Generator CLI tool");

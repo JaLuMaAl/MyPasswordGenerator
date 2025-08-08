@@ -26,13 +26,19 @@ namespace MyPasswordGenerator
             /* Al estar quietCommand y guidedCommand en el mismo nivel de jerarquía (ambos son "hijos" directos de rootCommand)
             estos comandos son mutuamente excluyentes, no pueden ser introducidos en la misma llamada */
 
-            // Creación de Option --numChar que permite personalizar el número de caracteres de la contraseña generada
+            // Creación de Option --numChar que permite al usuario indicar el número de caracteres de la contraseña generada
             Option<int> numCharOption = new("--numChar", "-c")
             {
                 Description = "Number of characters of the generated password",
-                // Longitud predeterminada de las contraseñas = 8 caracteres
+                // Longitud predeterminada de las contraseñas = 8 caracteres en caso de que el usuario no indique un valor
                 DefaultValueFactory = parseResult => 8
             };
+            // Compruebo que el valor introducido no es 0 ni negativo
+            numCharOption.Validators.Add(result =>
+            {
+                if (result.GetValue(numCharOption) < 1)
+                    result.AddError("Value must be greater than 0");
+            });
             // Se incluye numChar como option de quietCommand
             quietCommand.Options.Add(numCharOption);
 
@@ -43,6 +49,12 @@ namespace MyPasswordGenerator
                 // Número predeterminado de contraseñas generadas = 1
                 DefaultValueFactory = parseResult => 1
             };
+            // Compruebo que el valor introducido no es 0 ni negativo
+            numPasswordsOption.Validators.Add(result =>
+            {
+                if (result.GetValue(numPasswordsOption) < 1)
+                    result.AddError("Value must be greater than 0");
+            });
             // Se incluye numPasswords como option de quietCommand
             quietCommand.Options.Add(numPasswordsOption);
 

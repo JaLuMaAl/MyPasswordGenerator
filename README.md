@@ -24,6 +24,4 @@ MyPasswordGenerator nace con el objetivo de ayudar a **mejorar la seguridad digi
 
 - Administradores de sistemas o desarrolladores que necesiten automatizar la creación de credenciales.
 
-- Entornos donde se valora la eficiencia en la línea de comandos.
-
 *Este proyecto es de código abierto y se encuentra en desarrollo. ¡Las contribuciones, sugerencias y mejoras son bienvenidas!*
